@@ -58,7 +58,7 @@ open class ZoomAnimatedTransitioningDelegate: NSObject, UIViewControllerTransiti
         gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ZoomAnimatedTransitioningDelegate.handleSwipe(_:)))
         gestureRecognizer.delegate = self
         // Append it to a window otherwise it will be canceled during the transition
-        UIApplication.shared.keyWindow?.addGestureRecognizer(gestureRecognizer)
+        UIApplication.keyWindow?.addGestureRecognizer(gestureRecognizer)
     }
 
     @objc func handleSwipe(_ gesture: UIPanGestureRecognizer) {
@@ -306,7 +306,7 @@ class ZoomOutAnimator: ZoomAnimator, UIViewControllerAnimatedTransitioning {
             }
 
             // fixes the problem when the referenceSlideshowViewFrame was shifted during change of the status bar hidden state
-            if UIApplication.shared.isStatusBarHidden && !toViewController.prefersStatusBarHidden && referenceSlideshowViewFrame.origin.y != parent.referenceSlideshowViewFrame?.origin.y {
+            if UIApplication.isStatusBarHidden && !toViewController.prefersStatusBarHidden && referenceSlideshowViewFrame.origin.y != parent.referenceSlideshowViewFrame?.origin.y {
                 transitionViewFinalFrame = transitionViewFinalFrame.offsetBy(dx: 0, dy: 20)
             }
         } else {
@@ -340,7 +340,7 @@ class ZoomOutAnimator: ZoomAnimator, UIViewControllerAnimatedTransitioning {
 
             if completed {
                 fromViewController.view.removeFromSuperview()
-                UIApplication.shared.keyWindow?.removeGestureRecognizer(self.parent.gestureRecognizer)
+                UIApplication.keyWindow?.removeGestureRecognizer(self.parent.gestureRecognizer)
                 // Unpauses slideshow
                 self.referenceSlideshowView?.unpauseTimer()
             } else {
